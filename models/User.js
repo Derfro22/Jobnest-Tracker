@@ -19,12 +19,12 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Please enter an email'],
         unique: true,
         lowercase: true,
-        validate: [isEmail, 'Please enter a valid email']
+        validate: [value => isEmail(value), 'Please enter a valid email']
     },
     github: {
         type: String,
         trim: true,
-        validate: [isUrl, 'Please enter a valid URL']
+        validate: [value => isUrl(value), 'Please enter a valid URL']
     },
     profilePicture: {
         type: String,
@@ -53,7 +53,7 @@ userSchema.post('save', function (doc, next) {
 // fire a function before doc saved to db
 userSchema.pre('save', async function (next) {
     const salt = await bcrypt.genSalt();
-    this.password = await btcryp.hash(this.password, salt);
+    this.password = await bcryp.hash(this.password, salt);
     next();
 })
 

@@ -24,12 +24,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true,
         validate: [isUrl, 'Please enter a valid URL']
-        // validate: {
-        //     validator: function(v) {
-        //         return isURL(v, { require_protocol: false });
-        //     },
-        //     message: 'Please enter a valid URL'
-        // }
     },
     profilePicture: {
 
@@ -55,12 +49,6 @@ const offerSchema = new mongoose.Schema({
         type: String,
         trim: true,
         validate: [isUrl, 'Please enter a valid URL']
-        // validate: {
-        //     validator: function(v) {
-        //         return isURL(v, { require_protocol: false });
-        //     },
-        //     message: 'Please enter a valid URL'
-        // }
     },
     nameEmployer: {
         type: String,

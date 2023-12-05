@@ -26,7 +26,7 @@ mongoose.connect(dbURI)
 // routes
 app.get('*', checkUser);  
 app.get('/', (req, res) => res.render('home'));
-app.get('/dashboard', requireAuth, (req, res) => res.render('smoothies'));
+app.get('/dashboard', requireAuth, (req, res) => res.render('dashboard'));
 app.use(authRoutes);
 
 module.exports = app;
