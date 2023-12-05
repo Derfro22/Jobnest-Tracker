@@ -4,19 +4,44 @@ const bcrypt = require ('bcrypt');
 
 
 const userSchema = new mongoose.Schema({
+    firstname: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    lastname: {
+        type: String,
+        required: true,
+        trim: true
+    },
     email: {
         type: String,
         required: [true, 'Please enter an email'],
         unique: true,
         lowercase: true,
-        validate: [isEmail, 'Please enter a valide email']
+        validate: [isEmail, 'Please enter a valid email']
+    },
+    github: {
+        type: String,
+        trim: true,
+        validate: [isUrl, 'Please enter a valid URL']
+    },
+    profilePicture: {
+        type: String,
+        trim: true
+    },
+    cv: {
+        type: String,
+        trim: true
     },
     password: {
         type: String,
         required: [true, 'Please enter a password'],
-        minLength: [6, 'Minimum password length is 6 char']
+        minLength: [6, 'Minimum password length is 6 characters']
     },
-})
+    offers: [offerSchema] 
+});
+
 
 // fire a function  after doc saved to db
 userSchema.post('save', function (doc, next) {
