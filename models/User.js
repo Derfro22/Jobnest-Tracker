@@ -3,6 +3,55 @@ const { isEmail, isUrl } = require ('validator');
 const bcrypt = require ('bcrypt');
 
 
+const offerSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    website: {
+        type: String,
+        trim: true,
+        validate: [value => isUrl(value), 'Please enter a valid URL']
+    },
+    nameEmployer: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    emailEmployer: {
+        type: String,
+        trim: true,
+        lowercase: true,
+        validate: [isEmail, 'Please enter a valid email']
+    },
+    phoneEmployer: {
+        type: String,
+        trim: true
+    },
+    adress: {
+        type: String,
+        trim: true
+    },
+    origin: {
+        type: String,
+        required: true,
+        trim: true,
+        enum: ['Spontaneous solicitation', 'Job offer']
+    },
+    status: {
+        type: String,
+        required: true,
+        trim: true,
+        enum: ['Interested', 'CV sent', 'Negative', 'Interview']
+    },
+    comments: {
+        type: String,
+        required: true,
+        trim: true
+    },
+});
+
 const userSchema = new mongoose.Schema({
     firstname: {
         type: String,
@@ -38,10 +87,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please enter a password'],
         minLength: [6, 'Minimum password length is 6 characters']
-    }
-    // ,
-    // offers: [offerSchema] 
+    },
+    offers: [offerSchema] 
 });
+
+
 
 
 // fire a function  after doc saved to db
@@ -53,7 +103,7 @@ userSchema.post('save', function (doc, next) {
 // fire a function before doc saved to db
 userSchema.pre('save', async function (next) {
     const salt = await bcrypt.genSalt();
-    this.password = await bcryp.hash(this.password, salt);
+    this.password = await bcrypt.hash(this.password, salt);
     next();
 })
 
