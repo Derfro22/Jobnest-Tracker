@@ -55,12 +55,12 @@ const offerSchema = new mongoose.Schema({
 const userSchema = new mongoose.Schema({
     firstname: {
         type: String,
-        required: true,
+        // required: true,
         trim: true
     },
     lastname: {
         type: String,
-        required: true,
+        // required: true,
         trim: true
     },
     email: {
