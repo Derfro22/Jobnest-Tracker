@@ -3,12 +3,21 @@
 
 <form>
     <h2>Sign up</h2>
+    <label for="firstname">First Name</label>
+    <input type="text" name="firstname" placeholder="e.g., John" required />
+    <label for="lastname">Last Name</label>
+    <input type="text" name="lastname"placeholder="e.g., Doe" required />
     <label for="email">Email</label>
-    <input type="text" name="email" required />
+    <input type="text" name="email" placeholder="e.g., user@jobnest.com" required />
     <div class="email error"></div>
+    <label for="github">Github link</label>
+    <input type="text" name="github" placeholder="e.g., https://github.com/username" required />
     <label for="password">Password</label>
-    <input type="password" name="password" required />
+    <input type="password" name="password" placeholder="e.g., password" required />
     <div class="password error"></div>
+    <label for="password">Confirm Password</label>
+    <input type="password" name="password" placeholder="e.g., confirm password" required />
+
     <button>Sign up</button>
 </form>
 
