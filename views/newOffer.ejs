@@ -38,7 +38,36 @@
         <label for="comments">Comments:</label>
         <textarea id="comments" name="comments"></textarea><br><br>
     
-        <input type="submit" value="Submit">
+        <button>SAVE</button>
     </form>
 </div>
+
+
+<script>
+    const form = document.getElementById('createOfferForm');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+            const res = await fetch('/new-offer', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: { 'Content-type': 'application/json' }
+            });
+            const result = await res.json();
+
+            if (result.success) {
+                location.assign('/dashboard');
+            } else {
+                console.log(result.errors);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    });
+</script>
 

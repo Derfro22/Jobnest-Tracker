@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
-const { isEmail, isUrl } = require ('validator');
+const { isEmail } = require ('validator');
 const bcrypt = require ('bcrypt');
+
+const githubLinkRegex = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_-]+\/?$/;
 
 
 const offerSchema = new mongoose.Schema({
@@ -11,8 +13,7 @@ const offerSchema = new mongoose.Schema({
     },
     website: {
         type: String,
-        trim: true,
-        validate: [value => isUrl(value), 'Please enter a valid URL']
+        trim: true
     },
     nameEmployer: {
         type: String,
@@ -55,12 +56,12 @@ const offerSchema = new mongoose.Schema({
 const userSchema = new mongoose.Schema({
     firstname: {
         type: String,
-        // required: true,
+        required: true,
         trim: true
     },
     lastname: {
         type: String,
-        // required: true,
+        required: true,
         trim: true
     },
     email: {
@@ -68,12 +69,12 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Please enter an email'],
         unique: true,
         lowercase: true,
-        validate: [value => isEmail(value), 'Please enter a valid email']
+        validate: [isEmail, 'Please enter a valid email']
     },
     github: {
         type: String,
         trim: true,
-        validate: [value => isUrl(value), 'Please enter a valid URL']
+        validate: [githubLinkRegex, 'Please enter a valid github link']
     },
     profilePicture: {
         type: String,
