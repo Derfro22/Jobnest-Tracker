@@ -88,6 +88,65 @@ module.exports.login_post = async (req, res) => {
     }
 }
 
+module.exports.create_new_offer = async (req, res) => {
+    try {
+        // Affichage du token JWT pour vérification
+        console.log("Token JWT:", req.cookies.jwt);
+
+        const token = req.cookies.jwt;
+        if (!token) {
+            return res.status(401).json({ message: "No token provided" });
+        }
+        
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        console.log("Token décodé:", decoded);
+
+        const userId = decoded.id;
+        console.log("ID utilisateur:", userId);
+
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        console.log("Utilisateur avant la mise à jour:", user);
+
+        const { 
+            title,
+            website,
+            nameEmployer,
+            emailEmployer,
+            phoneEmployer,
+            address,
+            origin,
+            status,
+            comments
+         } = req.body;
+
+        console.log("Données reçues:", req.body);
+
+        user.offers.push({
+            title,
+            website,
+            nameEmployer,
+            emailEmployer,
+            phoneEmployer,
+            address,
+            origin,
+            status, 
+            comments
+         });
+
+        await user.save();
+
+        console.log("Utilisateur après la mise à jour:", user);
+
+        res.status(201).json({ message: "Offer added successfully" });
+    } catch (error) {
+        console.error("Erreur dans create_new_offer:", error);
+        res.status(500).json({ error: error.message });
+    }
+};
 
 module.exports.logout_get = (req, res) => {
     res.cookie('jwt', '', { maxAge: 1});

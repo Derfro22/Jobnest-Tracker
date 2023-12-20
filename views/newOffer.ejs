@@ -1,44 +1,52 @@
 <%- include('partials/header'); -%>
 
 
-<div class="createOffer">
-    <form>
-        <label for="jobTitle">Job Title:</label>
-        <input type="text" id="jobTitle" name="jobTitle"><br><br>
+<div class="createOfferForm">
+    <form id="createOfferForm" action="/new-offer" method="post">
+        <label for="title">Job Title:</label>
+        <input type="text" id="jobTitle" name="jobTitle">
+        <div class="title error"></div>
     
         <label for="website">Website:</label>
-        <input type="text" id="website" name="website"><br><br>
+        <input type="text" id="website" name="website">
+        <div class="website error"></div>
     
-        <label for="employerName">Name of Employer:</label>
-        <input type="text" id="employerName" name="employerName"><br><br>
-    
-        <label for="contactEmail">Email of Contact:</label>
-        <input type="email" id="contactEmail" name="contactEmail"><br><br>
-    
-        <label for="contactPhone">Phone Number:</label>
-        <input type="tel" id="contactPhone" name="contactPhone"><br><br>
-    
+        <label for="nameEmployer">Name of Employer:</label>
+        <input type="text" id="nameEmployer" name="nameEmployer">
+        <div class="nameEmployer error"></div>
+
+        <label for="emailEmployer">Email of Contact:</label>
+        <input type="email" id="emailEmployer" name="emailEmployer">
+        <div class="emailEmployer error"></div>
+
+        <label for="phoneEmployer">Phone Number:</label>
+        <input type="tel" id="phoneEmployer" name="phoneEmployer">
+        <div class="phoneEmployer error"></div>
+
         <label for="address">Address:</label>
-        <input type="text" id="address" name="address"><br><br>
-    
-        <label for="type">Type:</label>
-        <select id="type" name="type">
-            <option value="candidature">Candidature</option>
-            <option value="jobOffer">Job Offer</option>
-        </select><br><br>
-    
+        <input type="text" id="address" name="address">
+        <div class="address error"></div>
+
+        <label for="origin">origin:</label>
+        <select id="origin" name="origin">
+            <option value="Spontaneous solicitation">Candidature</option>
+            <option value="Job offer">Job Offer</option>
+        </select>
+
+
         <label for="status">Status:</label>
         <select id="status" name="status">
-            <option value="interested">Interested</option>
-            <option value="CV Sent">CV sent</option>
+            <option value="Interested">Interested</option>
+            <option value="CV sent">CV sent</option>
             <option value="Negative">Negative</option>
             <option value="Interview">Interview</option>
-        </select><br><br>
+        </select>
     
         <label for="comments">Comments:</label>
-        <textarea id="comments" name="comments"></textarea><br><br>
-    
-        <button>SAVE</button>
+        <textarea id="comments" name="comments"></textarea>
+        <div class="comments error"></div>
+
+        <button type="submit">SAVE</button>
     </form>
 </div>
 
@@ -46,24 +54,73 @@
 <script>
     const form = document.getElementById('createOfferForm');
 
+    const titleError = document.querySelector('.title.error');
+    const websiteError = document.querySelector('.website.error');
+    const nameEmployerError = document.querySelector('.nameEmployer.error');
+    const emailEmployerError = document.querySelector('.emailEmployer.error');
+    const phoneEmployerError = document.querySelector('.phoneEmployer.error');
+    const addressError = document.querySelector('.address.error');
+    const originError = document.querySelector('.origin.error');
+    const statusError = document.querySelector('.status.error');
+    const commentsError = document.querySelector('.comments.error');
+
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
 
+        // Reset errors
+        titleError.textContent = '';
+        websiteError.textContent = '';
+        nameEmployerError.textContent = '';
+        emailEmployerError.textContent = '';
+        phoneEmployerError.textContent = '';
+        addressError.textContent = '';
+        commentsError.textContent = '';
+
+        // Get the values
+        const title = form.jobTitle.value;
+        const website = form.website.value;
+        const nameEmployer = form.nameEmployer.value;
+        const emailEmployer = form.emailEmployer.value;
+        const phoneEmployer = form.phoneEmployer.value;
+        const address = form.address.value;
+        const origin = form.origin.value;
+        const status = form.status.value;
+        const comments = form.comments.value;
+        
         try {
             const res = await fetch('/new-offer', {
                 method: 'POST',
-                body: JSON.stringify(data),
+                body: JSON.stringify({
+                    title,
+                    website,
+                    nameEmployer,
+                    emailEmployer,
+                    phoneEmployer,
+                    address,
+                    origin,
+                    status,
+                    comments
+                }),
                 headers: { 'Content-type': 'application/json' }
             });
-            const result = await res.json();
-
-            if (result.success) {
-                location.assign('/dashboard');
-            } else {
-                console.log(result.errors);
+            const data = await res.json();
+            if (data.errors) {
+                titleError.textContent = data.errors.title;
+                websiteError.textContent = data.errors.website;
+                nameEmployerError.textContent = data.errors.nameEmployer;
+                emailEmployerError.textContent = data.errors.emailEmployer;
+                phoneEmployerError.textContent = data.errors.phoneEmployer;
+                addressError.textContent = data.errors.address;
+                originError.textContent = data.errors.origin;
+                statusError.textContent = data.errors.status;
+                commentsError.textContent = data.errors.comments;
+            }
+            else {
+                location.assign('/');
             }
         } catch (err) {
             console.log(err);

@@ -3,22 +3,22 @@ const { isEmail } = require ('validator');
 const bcrypt = require ('bcrypt');
 
 const githubLinkRegex = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_-]+\/?$/;
-
+const urlRegex = /^(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/;
+const phoneRegex = /^(\+|00)?[0-9 \-\(\)\.]{7,32}$/;
 
 const offerSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true,
-        trim: true
+        required: true
     },
     website: {
         type: String,
-        trim: true
+        trim: true,
+        validate: [urlRegex, 'Please enter a valid url']
     },
     nameEmployer: {
         type: String,
-        required: true,
-        trim: true
+        required: true
     },
     emailEmployer: {
         type: String,
@@ -28,11 +28,11 @@ const offerSchema = new mongoose.Schema({
     },
     phoneEmployer: {
         type: String,
-        trim: true
+        trim: true,
+        validate: [phoneRegex, 'Please enter a valid phone number']
     },
     adress: {
-        type: String,
-        trim: true
+        type: String
     },
     origin: {
         type: String,

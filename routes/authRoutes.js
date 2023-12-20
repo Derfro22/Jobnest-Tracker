@@ -11,6 +11,7 @@ router.get('/logout', authController.logout_get);
 router.get('/new-offer', (req, res) => {
     res.render('newOffer');
 });
+router.post('/new-offer', authController.create_new_offer);
 router.get('*', (req, res) => {
     res.redirect('/');
 });
