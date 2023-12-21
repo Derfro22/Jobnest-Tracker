@@ -87,6 +87,18 @@ module.exports.login_post = async (req, res) => {
         res.status(400).json({ errors });
     }
 }
+module.exports.profile_get = async (req, res) => {
+    const token = req.cookies.jwt;
+    jwt.verify(token, process.env.JWT_SECRET, async (_, decodedToken) => {
+        try {
+            const user = await User.findById(decodedToken.id);
+            res.render('profile', { user });
+        } catch (error) {
+            console.error("Erreur :", error);
+            res.status(500).render('profile', { user: {} });
+        }
+    })
+};
 
 module.exports.getOfferDetails = async (req, res) => {
     const token = req.cookies.jwt;
@@ -156,9 +168,25 @@ module.exports.home_get = async (req, res) => {
     }
 };
 
-
-
-
+module.exports.delete_offer = async (req, res) => {
+    const token = req.cookies.jwt;
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
+        try {
+            const offerId = req.params.offerId;
+            await User.findByIdAndUpdate(decodedToken.id, {
+                $pull: {
+                    offers: {
+                        _id: offerId
+                    }
+                }
+            });
+            res.status(201).json({ message: "Offer deleted successfully", redirect: '/' });
+        } catch (error) {
+            console.log(error)
+            res.status(400).json(err);
+        }
+    })
+};
 
 
 module.exports.logout_get = (req, res) => {

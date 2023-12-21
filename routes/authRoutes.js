@@ -8,6 +8,7 @@ router.post('/signup', authController.signup_post);
 router.get('/login', authController.login_get);
 router.post('/login', authController.login_post);
 router.get('/logout', authController.logout_get);
+router.get('/profile', authController.profile_get);
 router.get('/new-offer', (req, res) => {
     res.render('newOffer');
 });
@@ -15,6 +16,7 @@ router.post('/new-offer', authController.create_new_offer);
 
 router.get('/dashboard', authController.home_get);
 router.get('/offer/:offerId', authController.getOfferDetails);
+router.delete('/offer/:offerId', authController.delete_offer);
 router.get('*', (req, res) => {
     res.redirect('/');
 });
