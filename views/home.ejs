@@ -8,8 +8,7 @@
       <% if (typeof user.offers !== 'undefined' && user.offers.length > 0) { %>
         <% user.offers.forEach(offer => { %>
           <div class="offer-card">
-            <% console.log("Offre trouvée :", offer); %>
-            <h4><%= offer.title %></h4>
+            <h2><%= offer.title %></h2>
             <p><%= offer.nameEmployer %></p>
             <a href="/offer/<%= offer._id %>">See more</a>
           </div>

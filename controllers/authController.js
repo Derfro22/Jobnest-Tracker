@@ -40,6 +40,14 @@ const createToken = (id) => {
     })
 }
 
+// const findOfferById = (offers, offerId) => {
+//     return offers.find(offer => offer._id.toString() === offerId.toString());
+//   };
+
+//   module.exports = {
+//     findOfferById,
+//   };
+
 module.exports.signup_get = (req, res) => {
     res.render('signup');
 }
@@ -153,7 +161,7 @@ module.exports.home_get = async (req, res) => {
         const userId = req.userId;
         const user = await User.findById(userId).populate('offers');
 
-        console.log("offerIds :", offerIds);
+        console.log("offerIds :", offerIds); // Ajoutez cette ligne
         console.log("Offres récupérées :", user.offers);
 
         res.render('home', { offers: user.offers });
