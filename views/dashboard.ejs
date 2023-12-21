@@ -1,23 +1,17 @@
-<%- include('partials/header'); -%>
 
-<header>
 
   <div class="headings">
-    <h2>Professional Pathway Panel</h2>
     <div class="offers-grid">
       <% if (typeof user.offers !== 'undefined' && user.offers.length > 0) { %>
         <% user.offers.forEach(offer => { %>
           <div class="offer-card">
             <h4><%= offer.title %></h4>
+            <h6><%= offer.status %></h6>
             <p><%= offer.nameEmployer %></p>
-            <a href="/offer/<%= offer._id %>">See more</a>
+            <a href="/offer/<%= offer._id %>" class="btnSee">See more</a>
           </div>
         <% }) %>
       <% } else { %>
         <p>nothing</p>
       <% } %>
       
-  </div>
-    <a href="/new-offer" class="btn">Create a new offer</a>
-  </div>
-</header>

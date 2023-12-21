@@ -40,14 +40,6 @@ const createToken = (id) => {
     })
 }
 
-// const findOfferById = (offers, offerId) => {
-//     return offers.find(offer => offer._id.toString() === offerId.toString());
-//   };
-
-//   module.exports = {
-//     findOfferById,
-//   };
-
 module.exports.signup_get = (req, res) => {
     res.render('signup');
 }
@@ -96,6 +88,22 @@ module.exports.login_post = async (req, res) => {
     }
 }
 
+module.exports.getOfferDetails = async (req, res) => {
+    const token = req.cookies.jwt;
+    jwt.verify(token, process.env.JWT_SECRET, async (_, decodedToken) => {
+        try {
+            const offerId = req.params.offerId;
+            console.log(offerId);
+            const user = await User.findById(decodedToken.id).populate('offers');
+            const offer = user.offers.find(offer => offer._id == offerId);
+            res.render('offer', { offer });
+            console.log("a");
+        } catch (error) {
+            console.error("Erreur :", error);
+            res.status(500).render('offer', { offer: {} });
+        }
+    })
+};
 
 module.exports.create_new_offer = async (req, res) => {
     const token = req.cookies.jwt;
@@ -127,7 +135,7 @@ module.exports.create_new_offer = async (req, res) => {
                     }
                 }
             });
-            res.status(201).json({ message: "Offer added successfully" });
+            res.status(201).json({ message: "Offer added successfully", redirect: '/' });
         } catch (error) {
             console.log(error)
             res.status(400).json(err);
@@ -148,11 +156,10 @@ module.exports.home_get = async (req, res) => {
     }
 };
 
-// module.exports.getOfferDetails = async (req, res) => {
-//     try{
 
-//     }
-// }
+
+
+
 
 module.exports.logout_get = (req, res) => {
     res.cookie('jwt', '', { maxAge: 1});

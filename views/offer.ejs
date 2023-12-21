@@ -1,0 +1,23 @@
+<%- include('partials/header'); -%>
+
+<span class="back"><a href="/" class="btnSee">Back to dashboard</a></span>
+
+<div class="offerDetails">
+    <div class="offer-details">
+        <% if (offer) { %>
+            <div class="offer-card">
+                <h4><%= offer.title %></h4>
+                <p><strong>Company:</strong> <%= offer.nameEmployer %></p>
+                <p><strong>Website:</strong> <a href="<%= offer.website %>"><%= offer.website %></a></p>
+                <p><strong>Email:</strong> <%= offer.emailEmployer %></p>
+                <p><strong>Phone:</strong> <%= offer.phoneEmployer %></p>
+                <p><strong>Address:</strong> <%= offer.address %></p>
+                <p><strong>Origin:</strong> <%= offer.origin %></p>
+                <p><strong>Status:</strong> <%= offer.status %></p>
+                <p><strong>Comments:</strong> <%= offer.comments %></p>
+            </div>
+            <% } else { %>
+                <p>No offer found.</p>
+            <% } %>
+      </div>
+</div>

@@ -33,7 +33,7 @@ const offerSchema = new mongoose.Schema({
         trim: true,
         validate: [phoneRegex, 'Please enter a valid phone number']
     },
-    adress: {
+    address: {
         type: String
     },
     origin: {
