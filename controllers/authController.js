@@ -148,6 +148,21 @@ module.exports.create_new_offer = async (req, res) => {
     }
 };
 
+module.exports.home_get = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const user = await User.findById(userId).populate('offers');
+
+        console.log("offerIds :", offerIds);
+        console.log("Offres récupérées :", user.offers);
+
+        res.render('home', { offers: user.offers });
+    } catch (error) {
+        console.error("Erreur :", error);
+        res.status(500).render('home', { offers: [] });
+    }
+};
+
 module.exports.logout_get = (req, res) => {
     res.cookie('jwt', '', { maxAge: 1});
     res.redirect('/');

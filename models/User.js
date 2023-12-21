@@ -6,6 +6,8 @@ const githubLinkRegex = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_-]+\/?$/
 const urlRegex = /^(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/;
 const phoneRegex = /^(\+|00)?[0-9 \-\(\)\.]{7,32}$/;
 
+
+
 const offerSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -91,7 +93,6 @@ const userSchema = new mongoose.Schema({
     },
     offers: [offerSchema] 
 });
-
 
 
 
