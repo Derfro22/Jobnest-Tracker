@@ -96,80 +96,63 @@ module.exports.login_post = async (req, res) => {
     }
 }
 
+
 module.exports.create_new_offer = async (req, res) => {
-    try {
-        // Affichage du token JWT pour vérification
-        console.log("Token JWT:", req.cookies.jwt);
-
-        const token = req.cookies.jwt;
-        if (!token) {
-            return res.status(401).json({ message: "No token provided" });
+    const token = req.cookies.jwt;
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
+        try {
+            const {
+                title,
+                website,
+                nameEmployer,
+                emailEmployer,
+                phoneEmployer,
+                address,
+                origin,
+                status,
+                comments
+            } = req.body;
+            await User.findByIdAndUpdate(decodedToken.id, {
+                $push: {
+                    offers: {
+                        title,
+                        website,
+                        nameEmployer,
+                        emailEmployer,
+                        phoneEmployer,
+                        address,
+                        origin,
+                        status,
+                        comments
+                    }
+                }
+            });
+            res.status(201).json({ message: "Offer added successfully" });
+        } catch (error) {
+            console.log(error)
+            res.status(400).json(err);
         }
-        
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        console.log("Token décodé:", decoded);
-
-        const userId = decoded.id;
-        console.log("ID utilisateur:", userId);
-
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-
-        console.log("Utilisateur avant la mise à jour:", user);
-
-        const { 
-            title,
-            website,
-            nameEmployer,
-            emailEmployer,
-            phoneEmployer,
-            address,
-            origin,
-            status,
-            comments
-         } = req.body;
-
-        console.log("Données reçues:", req.body);
-
-        user.offers.push({
-            title,
-            website,
-            nameEmployer,
-            emailEmployer,
-            phoneEmployer,
-            address,
-            origin,
-            status, 
-            comments
-         });
-
-        await user.save();
-
-        console.log("Utilisateur après la mise à jour:", user);
-
-        res.status(201).json({ message: "Offer added successfully" });
-    } catch (error) {
-        console.error("Erreur dans create_new_offer:", error);
-        res.status(500).json({ error: error.message });
-    }
+    })
 };
+
 
 module.exports.home_get = async (req, res) => {
     try {
         const userId = req.userId;
         const user = await User.findById(userId).populate('offers');
 
-        console.log("offerIds :", offerIds); // Ajoutez cette ligne
-        console.log("Offres récupérées :", user.offers);
-
-        res.render('home', { offers: user.offers });
+        res.render('dashboard', { offers: user.offers });
     } catch (error) {
         console.error("Erreur :", error);
-        res.status(500).render('home', { offers: [] });
+        res.status(500).render('dashboard', { offers: [] });
     }
 };
+
+// module.exports.getOfferDetails = async (req, res) => {
+//     try{
+
+//     }
+// }
 
 module.exports.logout_get = (req, res) => {
     res.cookie('jwt', '', { maxAge: 1});

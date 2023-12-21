@@ -13,7 +13,8 @@ router.get('/new-offer', (req, res) => {
 });
 router.post('/new-offer', authController.create_new_offer);
 
-router.get('/', authController.home_get);
+router.get('/dashboard', authController.home_get);
+// router.get('/offer/:offerId', offerController.getOfferDetails);
 router.get('*', (req, res) => {
     res.redirect('/');
 });
