@@ -1,6 +1,7 @@
 require('dotenv').config();
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 // handle errors
 const handleErrors = (err) => {
@@ -188,7 +189,30 @@ module.exports.delete_offer = async (req, res) => {
     })
 };
 
-
+module.exports.changePassword_post = async (req, res) => {
+    const token = req.cookies.jwt;
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
+        try {
+            const { currentPassword, newPassword } = req.body;
+            console.log("old", currentPassword);
+            console.log("new", newPassword);
+            const user = await User.findById(decodedToken.id);
+            const isMatch = await bcrypt.compare(currentPassword, user.password);
+            if (!isMatch) {
+                throw Error('incorrect password');
+            }
+            const salt = await bcrypt.genSalt();
+            const password = await bcrypt.hash(newPassword, salt);
+            await User.findByIdAndUpdate(decodedToken.id, {
+                password
+            });
+            res.status(201).json({ message: "Password changed successfully" });
+        } catch (error) {
+            console.log(error)
+            res.status(400).json(err);
+        }
+    })
+};
 module.exports.logout_get = (req, res) => {
     res.cookie('jwt', '', { maxAge: 1});
     res.redirect('/');

@@ -9,6 +9,8 @@ router.get('/login', authController.login_get);
 router.post('/login', authController.login_post);
 router.get('/logout', authController.logout_get);
 router.get('/profile', authController.profile_get);
+router.post('/change-password', authController.changePassword_post);
+
 router.get('/new-offer', (req, res) => {
     res.render('newOffer');
 });
