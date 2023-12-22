@@ -118,6 +118,7 @@ module.exports.getOfferDetails = async (req, res) => {
     })
 };
 
+
 module.exports.create_new_offer = async (req, res) => {
     const token = req.cookies.jwt;
     jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
@@ -155,8 +156,61 @@ module.exports.create_new_offer = async (req, res) => {
         }
     })
 };
-
-
+// module.exports.get_update_offer = async (req, res) => {
+//     const token = req.cookies.jwt;
+//     jwt.verify(token, process.env.JWT_SECRET, async (_, decodedToken) => {
+//         try {
+//             const offerId = req.params.offerId;
+//             console.log(offerId);
+//             const user = await User.findById(decodedToken.id).populate('offers');
+//             const offer = user.offers.find(offer => offer._id == offerId);
+//             res.render('update-offer', { offer });
+//         } catch (error) {
+//             console.error("Erreur :", error);
+//             res.status(500).render('updateOffer', { offer: {} });
+//         }
+//     })
+// };
+// module.exports.update_offer = async (req, res) => {
+//     const token = req.cookies.jwt;
+//     jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
+//         try {
+//             const offerId = req.params.offerId;
+//             console.log(offerId);
+//             const {
+//                 title,
+//                 website,
+//                 nameEmployer,
+//                 emailEmployer,
+//                 phoneEmployer,
+//                 address,
+//                 origin,
+//                 status,
+//                 comments
+//             } = req.body;
+//             await User.findOneAndUpdate(
+//                 { "_id": decodedToken.id, "offers._id": offerId },
+//                 { 
+//                     "$set": {
+//                         "offers.$.title": title,
+//                         "offers.$.website": website,
+//                         "offers.$.nameEmployer": nameEmployer,
+//                         "offers.$.emailEmployer": emailEmployer,
+//                         "offers.$.phoneEmployer": phoneEmployer,
+//                         "offers.$.address": address,
+//                         "offers.$.origin": origin,
+//                         "offers.$.status": status,
+//                         "offers.$.comments": comments
+//                     }
+//                 }
+//             );
+//             res.status(201).json({ message: "Offer added successfully", redirect: '/' });
+//         } catch (error) {
+//             console.log(error)
+//             res.status(400).json(err);
+//         }
+//     })
+// };
 module.exports.home_get = async (req, res) => {
     try {
         const userId = req.userId;

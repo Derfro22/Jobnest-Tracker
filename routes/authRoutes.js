@@ -18,6 +18,8 @@ router.post('/new-offer', authController.create_new_offer);
 
 router.get('/dashboard', authController.home_get);
 router.get('/offer/:offerId', authController.getOfferDetails);
+// router.get('/update-offer/:offerId', authController.get_update_offer);
+// router.post('/update-offer/:offerId', authController.update_offer);
 router.delete('/offer/:offerId', authController.delete_offer);
 router.get('*', (req, res) => {
     res.redirect('/');

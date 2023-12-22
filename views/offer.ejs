@@ -16,6 +16,9 @@
                 <p><strong>Status:</strong> <%= offer.status %></p>
                 <p><strong>Comments:</strong> <%= offer.comments %></p>
                 <button class="delete-offer-button" data-offer-id="<%= offer._id %>">Delete Offer</button>
+                <!-- <button class="update-offer-button" >
+                    <a href="/update-offer/<%= offer._id %>">Update Offer</a>
+                </button> -->
                 
             </div>
             <% } else { %>
