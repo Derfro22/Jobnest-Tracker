@@ -44,7 +44,8 @@ nav li a{
 }
 .btn{
   border-radius: 36px;
-  background: #FEE996;
+  /* background: #FEE996; */
+  background: #ffcaaf;
 }
 .btnSee{
   text-decoration: underline;
@@ -73,13 +74,21 @@ form{
   box-shadow: 1px 2px 3px rgba(0,0,0,0.1);
   border-radius: 10px;
   background: white;
+  
 }
 input{
-  padding: 10px 12px;
   border-radius: 4px;
   border: 1px solid #ddd;
   font-size: 1em;
   width: 100%;
+}
+input[type="text"]::placeholder {
+  color: #999;
+  opacity: 0.7;
+}
+input[type="password"]::placeholder {
+  color: #999;
+  opacity: 0.7;
 }
 label{
   display: block;
@@ -88,7 +97,7 @@ label{
 button{
   margin-top: 30px;
   border-radius: 36px;
-  background: #FEE996;
+  background: #ffcaaf;
   border:0;
   text-transform: uppercase;
   font-weight: 700;
@@ -98,7 +107,7 @@ button{
   letter-spacing: 2px;
 }
 .error{
-  color: #ff0099;
+  color: #ff4400;
   margin: 10px 2px;
   font-size: 0.8em;
   font-weight: bold;
@@ -134,26 +143,7 @@ h6 {
   margin: 0;
   color: #99440f;
 }
-.recipes{
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  column-gap: 30px;
-  row-gap: 80px;
-  margin: 80PX AUTO;
-  max-width: 1200px;
-}
-.recipe{
-  display: inline-block;
-  border-radius: 20px;
-  background: white;
-  position: relative;
-  text-align: center;
-  padding: 0 20px 30px 20px
-}
-.recipe img{
-  width: 100px;
-  margin: -30px auto 20px;
-}
+
 footer{
   text-align: center;
   margin-top: 120px;
