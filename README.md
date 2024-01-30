@@ -15,6 +15,12 @@ Welcome to Jobnest, your all-in-one solution for managing your job applications!
 - **Authentication:** User authentication implemented using JWT (JSON Web Token)
 - **CRUD Operations:** Full CRUD (Create, Read, Update, Delete) functionality for managing job applications
 
+## About This Project
+
+This project marked my first experience with EJS, MongoDB, and JWT authentication. As a beginner in these technologies, I faced various challenges and learned valuable lessons throughout the development process. Despite the complexity, it was a rewarding journey that allowed me to gain hands-on experience and improve my skills.
+
+Feel free to explore the code and provide any feedback or suggestions. Thank you for joining me on this learning adventure!
+
 ## Preview
 
 ![Jobnest Preview](/public/img/00.png)
