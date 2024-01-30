@@ -30,6 +30,6 @@ Feel free to explore the code and provide any feedback or suggestions. Thank you
 
 ## Try It Out
 
-Experience BeMovies by visiting [the live site](https://jobnest-derfro22.vercel.app/)!
+Experience Jobnest by visiting [the live site](https://jobnest-derfro22.vercel.app/)!
 
 Embark on your career journey with JobNest! 🚀 Explore opportunities, track applications, and navigate your path to professional success. Happy job hunting!
