@@ -17,5 +17,8 @@ Welcome to Jobnest, your all-in-one solution for managing your job applications!
 
 ## Preview
 
-
+![Jobnest Preview](/public/img/00.png)
+![Jobnest Preview](/public/img/01.png)
+![Jobnest Preview](/public/img/02.png)
+![Jobnest Preview](/public/img/03.png)
 
